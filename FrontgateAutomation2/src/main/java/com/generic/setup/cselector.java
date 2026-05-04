@@ -1,10 +1,6 @@
 package com.generic.setup;
 
-/**
- * Selector container matching the pattern from the reference project.
- * Holds a primary selector string and an optional fallback.
- * Format: "css,<value>"  |  "id,<value>"  |  "name,<value>"
- */
+
 public class cselector {
 
     public final String primary;
