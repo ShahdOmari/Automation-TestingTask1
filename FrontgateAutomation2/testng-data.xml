@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!-- RULE: Data-Driven — all test values live here, NOT inside test classes -->
+<suite name="FrontgateSuite" verbose="1">
+
+    <parameter name="baseUrl"
+               value="https://certwcs.frontgate.com/?aka_bypass=5C73514EE7A609054D81DE61DD9CA3D6"/>
+    <parameter name="email"             value="chef03@anhmaybietchoi.com"/>
+    <parameter name="password"          value="Shahd@123456"/>
+    <parameter name="expectedFirstName" value="Welcome ss"/>
+
+    <test name="LoginTests">
+        <classes>
+            <class name="tests.LoginTest"/>
+        </classes>
+    </test>
+
+</suite>

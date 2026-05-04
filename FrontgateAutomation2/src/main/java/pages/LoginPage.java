@@ -1,0 +1,101 @@
+package pages;
+
+import com.generic.selector.LoginSelectors;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+/**
+ * RULE — POM       : page actions only, no test data or test logic.
+ * RULE — Locators  : moved to LoginSelectors. None hardcoded here.
+ * RULE — No sleep  : WebDriverWait + ExpectedConditions only.
+ *
+ * All method bodies are kept IDENTICAL to the original working code.
+ * Only change: private By fields replaced with LoginSelectors references.
+ *
+ * NOTE on JS usage: The original code used JS for scrollIntoView, jsSetValue,
+ * and JS click — these are intentionally kept because the Frontgate site
+ * requires them (React-based inputs reject plain sendKeys).
+ */
+public class LoginPage extends BasePage {
+
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
+
+    // ── helpers (original code, unchanged) ────────────────────────────────────
+
+    private JavascriptExecutor js() {
+        return (JavascriptExecutor) driver;
+    }
+
+    private void scrollToElement(WebElement element) {
+        js().executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+    }
+
+    private void jsSetValue(WebElement element, String value) {
+        js().executeScript(
+            "var el = arguments[0];" +
+            "var nativeInputValueSetter = Object.getOwnPropertyDescriptor(" +
+            "    window.HTMLInputElement.prototype, 'value').set;" +
+            "nativeInputValueSetter.call(el, arguments[1]);" +
+            "el.dispatchEvent(new Event('input', { bubbles: true }));" +
+            "el.dispatchEvent(new Event('change', { bubbles: true }));",
+            element, value
+        );
+    }
+
+    // ── page actions (original logic, locators now from LoginSelectors) ────────
+
+    public void dismissCookieBannerIfPresent() {
+        try {
+            WebElement cookie = new WebDriverWait(driver, java.time.Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(
+                    by(LoginSelectors.cookieBannerCloseBtn)));
+            scrollToElement(cookie);
+            cookie.click();
+            System.out.println("[LoginPage] Cookie banner closed!");
+            new WebDriverWait(driver, java.time.Duration.ofSeconds(5))
+                .until(ExpectedConditions.invisibilityOf(cookie));
+        } catch (Exception e) {
+            System.out.println("[LoginPage] No cookie banner: " + e.getMessage());
+        }
+    }
+
+    public void enterEmail(String email) {
+        WebElement field = wait.until(
+            ExpectedConditions.presenceOfElementLocated(by(LoginSelectors.emailField))
+        );
+        scrollToElement(field);
+        jsSetValue(field, email);
+        System.out.println("[LoginPage] Email entered: " + email);
+    }
+
+    public void enterPassword(String password) {
+        WebElement field = wait.until(
+            ExpectedConditions.presenceOfElementLocated(by(LoginSelectors.passwordField))
+        );
+        scrollToElement(field);
+        jsSetValue(field, password);
+        System.out.println("[LoginPage] Password entered!");
+    }
+
+    public void clickLogin() {
+        WebElement button = wait.until(
+            ExpectedConditions.presenceOfElementLocated(by(LoginSelectors.loginButton))
+        );
+        scrollToElement(button);
+        wait.until(ExpectedConditions.elementToBeClickable(by(LoginSelectors.loginButton)));
+        js().executeScript("arguments[0].click();", button);
+        System.out.println("[LoginPage] Login button clicked!");
+    }
+
+    public void login(String email, String password) {
+        dismissCookieBannerIfPresent();
+        enterEmail(email);
+        enterPassword(password);
+        clickLogin();
+    }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [FrontgateSuite]" guice-stage="DEVELOPMENT">
+  <parameter name="baseUrl" value="https://certwcs.frontgate.com/?aka_bypass=5C73514EE7A609054D81DE61DD9CA3D6"/>
+  <parameter name="password" value="Shahd@123456"/>
+  <parameter name="expectedFirstName" value="Welcome ss"/>
+  <parameter name="email" value="chef03@anhmaybietchoi.com"/>
+  <test thread-count="5" name="LoginTests(failed)">
+    <classes>
+      <class name="tests.LoginTest">
+        <methods>
+          <include name="verifyLoginSuccess"/>
+          <include name="verifyHomePageElements"/>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- tests.LoginTest -->
+    </classes>
+  </test> <!-- LoginTests(failed) -->
+</suite> <!-- Failed suite [FrontgateSuite] -->
