@@ -8,14 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-/**
- * RULE — POM       : page actions only, no test logic here.
- * RULE — Locators  : moved to HomePageSelectors. None hardcoded here.
- * RULE — No sleep  : WebDriverWait + ExpectedConditions only.
- *
- * All method bodies are kept IDENTICAL to the original working code.
- * Only change: private By fields replaced with HomePageSelectors references.
- */
+
 public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {
@@ -44,7 +37,6 @@ public class HomePage extends BasePage {
     }
 
     public void clickSignIn() {
-        // Original logic preserved exactly
         WebElement accountBtn = wait.until(
             ExpectedConditions.visibilityOfElementLocated(
                 by(HomePageSelectors.myAccountButton))
@@ -57,7 +49,6 @@ public class HomePage extends BasePage {
     }
 
     public String getWelcomeMessage() {
-        // Original logic preserved exactly
         WebElement accountBtn = new WebDriverWait(driver, Duration.ofSeconds(20))
             .until(ExpectedConditions.visibilityOfElementLocated(
                 by(HomePageSelectors.myAccountButton)));
