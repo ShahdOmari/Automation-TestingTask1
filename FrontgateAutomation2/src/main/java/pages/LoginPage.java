@@ -7,25 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * RULE — POM       : page actions only, no test data or test logic.
- * RULE — Locators  : moved to LoginSelectors. None hardcoded here.
- * RULE — No sleep  : WebDriverWait + ExpectedConditions only.
- *
- * All method bodies are kept IDENTICAL to the original working code.
- * Only change: private By fields replaced with LoginSelectors references.
- *
- * NOTE on JS usage: The original code used JS for scrollIntoView, jsSetValue,
- * and JS click — these are intentionally kept because the Frontgate site
- * requires them (React-based inputs reject plain sendKeys).
- */
+
+
 public class LoginPage extends BasePage {
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
 
-    // ── helpers (original code, unchanged) ────────────────────────────────────
 
     private JavascriptExecutor js() {
         return (JavascriptExecutor) driver;
@@ -47,7 +36,6 @@ public class LoginPage extends BasePage {
         );
     }
 
-    // ── page actions (original logic, locators now from LoginSelectors) ────────
 
     public void dismissCookieBannerIfPresent() {
         try {
