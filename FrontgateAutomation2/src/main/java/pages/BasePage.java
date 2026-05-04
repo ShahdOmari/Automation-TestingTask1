@@ -6,10 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-/**
- * RULE — POM: every page class extends BasePage.
- * Original BasePage kept intact + added by() helper to resolve cselector → By.
- */
+
 public class BasePage {
 
     protected WebDriver     driver;
@@ -20,10 +17,7 @@ public class BasePage {
         this.wait   = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
-    /**
-     * Converts a cselector into a Selenium By.
-     * RULE — Prefer id > name > CSS. No XPath generated.
-     */
+    
     protected By by(cselector sel) {
         String[] parts = sel.primary.split(",", 2);
         switch (parts[0].trim().toLowerCase()) {
